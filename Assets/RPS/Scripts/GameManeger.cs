@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
     public void RestartGame()
     {
         scoreManager.ResetScores();
-        restartButton.SetActive(false);
+        //restartButton.SetActive(false);
     }
 
     public void ShowResultUI(string message)
@@ -143,8 +143,7 @@ public class GameManager : MonoBehaviour
         if (AICountText != null)
             AICountText.text = "";
 
-        if (restartButton != null)
-            restartButton.SetActive(false);
+        
 
         playerGesture = null;
 
