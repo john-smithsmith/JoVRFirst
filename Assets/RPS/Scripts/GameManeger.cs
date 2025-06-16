@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public ScoreManager scoreManager;//인스펙터에서 불러오기
     public GameObject restartButton;
     public TMP_Text resultText;
+    public TMP_Text AICountText;
 
     private RPSGesture? playerGesture = null;
     private RPSGesture? enemyGesture = null;
@@ -128,6 +129,29 @@ public class GameManager : MonoBehaviour
         }
 
         return "판정 오류";
+    }
+
+    public void Restart()
+    {
+        CancelInvoke();
+
+        scoreManager.ResetScores();
+
+        if (resultText != null)
+            resultText.text = "";
+
+        if (AICountText != null)
+            AICountText.text = "";
+
+        if (restartButton != null)
+            restartButton.SetActive(false);
+
+        playerGesture = null;
+
+        enemyGesture = null;
+
+        Debug.Log("초기화");
+
     }
 
 }
