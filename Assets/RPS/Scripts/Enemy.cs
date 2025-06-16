@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +12,7 @@ public class Enemy : MonoBehaviour
     public Sprite rockSprite;
     public Sprite paperSprite;
     public Sprite scissorSprite;
+    public TMP_Text AICountText;
 
     private void Start()
     {
@@ -24,24 +26,25 @@ public class Enemy : MonoBehaviour
             
             yield return ChantCoroutine();// 가위바위보로그
 
-            
+            yield return new WaitForSeconds(1f);
+
             ChooseGesture();//3개중에 하나
 
-           
             yield return new WaitForSeconds(2f);
         }
     }
 
     IEnumerator ChantCoroutine()
     {
-        Debug.Log("가위!");
+        AICountText.text = "ROCK!";
         yield return new WaitForSeconds(1f);
 
-        Debug.Log("바위!");
+        AICountText.text = "PAPER";
         yield return new WaitForSeconds(1f);
 
-        Debug.Log("보!");
+        AICountText.text = "SICCOR!";
         yield return new WaitForSeconds(1f);
+        AICountText.text = ""; 
     }
 
     void ChooseGesture()
@@ -54,15 +57,21 @@ public class Enemy : MonoBehaviour
             case RPSGesture.Rock:
                 aiChoiceImage.sprite = rockSprite;
                 Debug.Log("AI : Rock");
+                GameManager.Instance.SetEnemyGesture(RPSGesture.Rock);
                 break;
+
             case RPSGesture.Paper:
                 aiChoiceImage.sprite = paperSprite;
                 Debug.Log("AI : Paper");
+                GameManager.Instance.SetEnemyGesture(RPSGesture.Paper);
                 break;
+
             case RPSGesture.Scissor:
                 aiChoiceImage.sprite = scissorSprite;
                 Debug.Log("AI : Scissor");
+                GameManager.Instance.SetEnemyGesture(RPSGesture.Scissor);
                 break;
         }
+       
     }
 }
