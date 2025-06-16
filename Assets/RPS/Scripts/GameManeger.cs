@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -7,6 +8,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     public ScoreManager scoreManager;//인스펙터에서 불러오기
     public GameObject restartButton;
+    public TMP_Text resultText;
 
     private RPSGesture? playerGesture = null;
     private RPSGesture? enemyGesture = null;
@@ -33,7 +35,24 @@ public class GameManager : MonoBehaviour
         restartButton.SetActive(false);
     }
 
-    void TryJudge()
+    public void ShowResultUI(string message)
+    {
+        if (resultText != null)
+        {
+            resultText.text = message;
+
+            
+            CancelInvoke(nameof(ClearResultUI));
+            Invoke(nameof(ClearResultUI), 2f);
+        }
+    }
+
+    public void ClearResultUI()
+    {
+        resultText.text = "";
+    }
+
+    public void TryJudge()
     {
         if (playerGesture.HasValue && enemyGesture.HasValue)
         {
@@ -41,6 +60,8 @@ public class GameManager : MonoBehaviour
 
             string result = GetResult(playerGesture.Value, enemyGesture.Value);
             Debug.Log($"결과: {result}");
+
+            ShowResultUI(result);
 
             switch (result)
             {
@@ -54,12 +75,12 @@ public class GameManager : MonoBehaviour
 
             if (scoreManager.HasPlayerWon())
             {
-                Debug.Log("플레이어가 승리!");
+                Debug.Log("플레이어 승리!");
                 scoreManager.ResetScores();
             }
             else if (scoreManager.HasEnemyWon())
             {
-                Debug.Log("AI가 승리!");
+                Debug.Log("AI 승리!");
                 scoreManager.ResetScores();
             }
 
@@ -74,7 +95,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    string GetResult(RPSGesture player, RPSGesture enemy)
+    public string GetResult(RPSGesture player, RPSGesture enemy)
     {
         switch (player)
         {
