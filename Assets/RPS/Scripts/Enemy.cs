@@ -14,25 +14,37 @@ public class Enemy : MonoBehaviour
     public Sprite scissorSprite;
     public TMP_Text AICountText;
 
-    private void Start()
+    //private void Start()
+    //{
+    //    StartCoroutine(ChoiceRoutine());
+    //}
+
+    public void PlayOneRound()
     {
-        StartCoroutine(ChoiceRoutine());
+        StartCoroutine(SingleRoundRoutine());// 시작버튼
     }
 
-    IEnumerator ChoiceRoutine()
+    IEnumerator SingleRoundRoutine()
     {
-        while (true)
-        { 
+        yield return ChantCoroutine();
+        yield return new WaitForSeconds(1f);
+        ChooseGesture();
+    }
+
+    //IEnumerator ChoiceRoutine()
+    //{
+    //    while (true)
+    //    { 
             
-            yield return ChantCoroutine();// 가위바위보로그
+    //        yield return ChantCoroutine();// 가위바위보로그
 
-            yield return new WaitForSeconds(1f);
+    //        yield return new WaitForSeconds(1f);
 
-            ChooseGesture();//3개중에 하나
+    //        ChooseGesture();//3개중에 하나
 
-            yield return new WaitForSeconds(2f);
-        }
-    }
+    //        yield return new WaitForSeconds(2f);
+    //    }
+    //}
 
     IEnumerator ChantCoroutine()
     {

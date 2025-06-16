@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public ScoreManager scoreManager;//인스펙터에서 불러오기
+    public GameObject restartButton;
 
     private RPSGesture? playerGesture = null;
     private RPSGesture? enemyGesture = null;
@@ -25,6 +26,11 @@ public class GameManager : MonoBehaviour
     {
         enemyGesture = gesture;
         TryJudge();
+    }
+    public void RestartGame()
+    {
+        scoreManager.ResetScores();
+        restartButton.SetActive(false);
     }
 
     void TryJudge()
@@ -59,6 +65,12 @@ public class GameManager : MonoBehaviour
 
             playerGesture = null;
             enemyGesture = null;
+        }
+
+        if (scoreManager.HasPlayerWon() || scoreManager.HasEnemyWon())
+        {
+            Debug.Log("게임 종료");
+            restartButton.SetActive(true);  // Restart 버튼
         }
     }
 
