@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
     public void SetEnemyGesture(RPSGesture gesture)
     {
         enemyGesture = gesture;
-        //TryJudge();
+        TryJudge();
     }
     //public void RestartGame()
     //{
@@ -107,27 +107,27 @@ public class GameManager : MonoBehaviour
             case RPSGesture.Rock:
                 switch (enemy)
                 {
-                    case RPSGesture.Rock: return "draw!";
-                    case RPSGesture.Paper: return "lose!";
-                    case RPSGesture.Scissor: return "win!";
+                    case RPSGesture.Rock: return "Draw!";
+                    case RPSGesture.Paper: return "Lose!";
+                    case RPSGesture.Scissor: return "Win!";
                 }
                 break;
 
             case RPSGesture.Paper:
                 switch (enemy)
                 {
-                    case RPSGesture.Rock: return "win!";
-                    case RPSGesture.Paper: return "draw!";
-                    case RPSGesture.Scissor: return "lose!";
+                    case RPSGesture.Rock: return "Win!";
+                    case RPSGesture.Paper: return "Draw!";
+                    case RPSGesture.Scissor: return "Lose!";
                 }
                 break;
 
             case RPSGesture.Scissor:
                 switch (enemy)
                 {
-                    case RPSGesture.Rock: return "lose!";
-                    case RPSGesture.Paper: return "win!";
-                    case RPSGesture.Scissor: return "draw!";
+                    case RPSGesture.Rock: return "Lose!";
+                    case RPSGesture.Paper: return "Win!";
+                    case RPSGesture.Scissor: return "Draw!";
                 }
                 break;
         }
