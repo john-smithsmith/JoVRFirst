@@ -10,7 +10,7 @@ public class GestureDebugLogger : MonoBehaviour
 
     public void LogGesture()
     {
-        Debug.Log($"플레이어: {gesture}!");
+        Debug.Log($"player: {gesture}!");
         GameManager.Instance.SetPlayerGesture((RPSGesture)gesture);
     }
 }

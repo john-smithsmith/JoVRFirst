@@ -14,15 +14,15 @@ public class Enemy : MonoBehaviour
     public Sprite scissorSprite;
     public TMP_Text AICountText;
 
-    //private void Start()
-    //{
-    //    StartCoroutine(ChoiceRoutine());
-    //}
-
-    public void PlayOneRound()
+    private void Start()
     {
-        StartCoroutine(SingleRoundRoutine());// 시작버튼
+        StartCoroutine(ChoiceRoutine());
     }
+
+    //public void PlayOneRound()
+    //{
+    //    StartCoroutine(SingleRoundRoutine());// 시작버튼
+    //}
 
     IEnumerator SingleRoundRoutine()
     {
@@ -31,20 +31,23 @@ public class Enemy : MonoBehaviour
         ChooseGesture();
     }
 
-    //IEnumerator ChoiceRoutine()
-    //{
-    //    while (true)
-    //    { 
-            
-    //        yield return ChantCoroutine();// 가위바위보로그
+    IEnumerator ChoiceRoutine()
+    {
+        while (true)
+        {
 
-    //        yield return new WaitForSeconds(1f);
+            yield return ChantCoroutine();// 가위바위보로그
 
-    //        ChooseGesture();//3개중에 하나
+            yield return new WaitForSeconds(1f);
 
-    //        yield return new WaitForSeconds(2f);
-    //    }
-    //}
+            ChooseGesture();//3개중에 하나
+
+            yield return new WaitForSeconds(1f);
+            aiChoiceImage.enabled = false;
+            yield return new WaitForSeconds(1f);
+
+        }
+    }
 
     IEnumerator ChantCoroutine()
     {
@@ -61,11 +64,14 @@ public class Enemy : MonoBehaviour
 
     void ChooseGesture()
     {
+        aiChoiceImage.enabled = true;
         int choice = Random.Range(0, 3);
         RPSGesture gesture = (RPSGesture)choice;
+        
 
         switch (gesture)
         {
+
             case RPSGesture.Rock:
                 aiChoiceImage.sprite = rockSprite;
                 Debug.Log("AI : Rock");

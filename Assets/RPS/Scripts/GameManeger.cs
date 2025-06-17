@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public ScoreManager scoreManager;//인스펙터에서 불러오기
-    public GameObject restartButton;
+    //public GameObject restartButton;
     public TMP_Text resultText;
     public TMP_Text AICountText;
 
@@ -28,13 +28,13 @@ public class GameManager : MonoBehaviour
     public void SetEnemyGesture(RPSGesture gesture)
     {
         enemyGesture = gesture;
-        TryJudge();
+        //TryJudge();
     }
-    public void RestartGame()
-    {
-        scoreManager.ResetScores();
-        //restartButton.SetActive(false);
-    }
+    //public void RestartGame()
+    //{
+    //    scoreManager.ResetScores();
+    //    restartButton.SetActive(false);
+    //}
 
     public void ShowResultUI(string message)
     {
@@ -57,42 +57,46 @@ public class GameManager : MonoBehaviour
     {
         if (playerGesture.HasValue && enemyGesture.HasValue)
         {
-            Debug.Log($"[판정] 플레이어: {playerGesture}, AI: {enemyGesture}");
+            Debug.Log($"[who] Player: {playerGesture}, AI: {enemyGesture}");
 
             string result = GetResult(playerGesture.Value, enemyGesture.Value);
-            Debug.Log($"결과: {result}");
+            Debug.Log($"result: {result}");
 
             ShowResultUI(result);
 
             switch (result)
             {
-                case "승리!":
+                case "Win!":
                     scoreManager.AddPlayerScore();
                     break;
-                case "패배!":
+                case "Lose!":
                     scoreManager.AddEnemyScore();
                     break;
             }
 
+            playerGesture = null;
+            enemyGesture = null;
+
             if (scoreManager.HasPlayerWon())
             {
-                Debug.Log("플레이어 승리!");
+                Debug.Log("player win!");
+                ShowResultUI("Player Win!");
                 scoreManager.ResetScores();
             }
             else if (scoreManager.HasEnemyWon())
             {
-                Debug.Log("AI 승리!");
+                Debug.Log("AI win!");
+                ShowResultUI("AI Win!");
                 scoreManager.ResetScores();
             }
 
-            playerGesture = null;
-            enemyGesture = null;
+           
         }
 
         if (scoreManager.HasPlayerWon() || scoreManager.HasEnemyWon())
         {
-            Debug.Log("게임 종료");
-            restartButton.SetActive(true);  // Restart 버튼
+            Debug.Log("end");
+            //restartButton.SetActive(true);  // Restart 버튼
         }
     }
 
@@ -103,32 +107,32 @@ public class GameManager : MonoBehaviour
             case RPSGesture.Rock:
                 switch (enemy)
                 {
-                    case RPSGesture.Rock: return "무승부!";
-                    case RPSGesture.Paper: return "패배!";
-                    case RPSGesture.Scissor: return "승리!";
+                    case RPSGesture.Rock: return "draw!";
+                    case RPSGesture.Paper: return "lose!";
+                    case RPSGesture.Scissor: return "win!";
                 }
                 break;
 
             case RPSGesture.Paper:
                 switch (enemy)
                 {
-                    case RPSGesture.Rock: return "승리!";
-                    case RPSGesture.Paper: return "무승부!";
-                    case RPSGesture.Scissor: return "패배!";
+                    case RPSGesture.Rock: return "win!";
+                    case RPSGesture.Paper: return "draw!";
+                    case RPSGesture.Scissor: return "lose!";
                 }
                 break;
 
             case RPSGesture.Scissor:
                 switch (enemy)
                 {
-                    case RPSGesture.Rock: return "패배!";
-                    case RPSGesture.Paper: return "승리!";
-                    case RPSGesture.Scissor: return "무승부!";
+                    case RPSGesture.Rock: return "lose!";
+                    case RPSGesture.Paper: return "win!";
+                    case RPSGesture.Scissor: return "draw!";
                 }
                 break;
         }
 
-        return "판정 오류";
+        return "error";
     }
 
     public void Restart()
@@ -149,7 +153,7 @@ public class GameManager : MonoBehaviour
 
         enemyGesture = null;
 
-        Debug.Log("초기화");
+        Debug.Log("restart");
 
     }
     public void QuitGame()

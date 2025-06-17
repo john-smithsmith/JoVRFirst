@@ -33,7 +33,7 @@ public class ScoreManager : MonoBehaviour
         playerScore = 0;
         enemyScore = 0;
         UpdateScoreUI();
-        Debug.Log("점수가 초기화");
+        Debug.Log("restart");
     }
 
     void UpdateScoreUI()
