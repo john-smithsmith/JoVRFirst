@@ -152,5 +152,12 @@ public class GameManager : MonoBehaviour
         Debug.Log("√ ±‚»≠");
 
     }
+    public void QuitGame()
+    {
+        Application.Quit();
+
+        
+    }
+
 
 }
